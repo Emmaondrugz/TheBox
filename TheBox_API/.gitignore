@@ -1,0 +1,28 @@
+# Environments / secrets
+.env
+.env.*
+*.env
+*.key
+*.pem
+*.p12
+
+# Virtual environments
+venv/
+env/
+
+# Databases
+db.sqlite3
+*.sqlite3
+
+# Python cache / bytecode
+__pycache__/
+*.pyc
+
+# Logs
+*.log
+
+# IDE / editor settings
+.pycharm/
+.vscode/
+.idea/
+
