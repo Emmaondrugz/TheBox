@@ -1,4 +1,6 @@
-import { useState } from "react";
+"use client"
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Signup from "./ui/Signup";
 import Login from "./ui/Login";
@@ -9,6 +11,12 @@ type FormType = "signup" | "login" | "reset";
 type FormModalProps = {
     closeModal: () => void;
 };
+
+type FormDetailsProps = {
+    Email: string | null,
+    password: string | null
+}
+
 
 const formHeaderMap: Record<FormType, { title: string; subtitle: string }> = {
     signup: {
@@ -25,12 +33,21 @@ const formHeaderMap: Record<FormType, { title: string; subtitle: string }> = {
     },
 };
 
+
+
 export default function FormModal({ closeModal }: FormModalProps) {
     // Handle the state of form slider
     const [form, setForm] = useState<FormType>("signup");
 
+    // Form submission state
+    const [formDetails, setFormDetails] = useState<FormDetailsProps>({
+        Email: null,
+        password: null,
+    });
+
     const translateValue =
         form === "signup" ? "0%" : form === "login" ? "-33.3333%" : "-66.6667%";
+
 
     return (
         <div className="sm:max-w-[400px] w-full text-black sm:h-[450px] bg-white rounded-md px-4 py-5">
@@ -75,7 +92,7 @@ export default function FormModal({ closeModal }: FormModalProps) {
                                     }`}
                             >
                                 <div className="h-full pr-2">
-                                    <Signup setForm={setForm} />
+                                    <Signup setForm={setForm} setFormDetails={setFormDetails} />
                                 </div>
                             </div>
 
@@ -85,7 +102,7 @@ export default function FormModal({ closeModal }: FormModalProps) {
                                     }`}
                             >
                                 <div className="h-full px-2">
-                                    <Login setForm={setForm} />
+                                    <Login setForm={setForm} setFormDetails={setFormDetails} />
                                 </div>
                             </div>
 
@@ -95,7 +112,7 @@ export default function FormModal({ closeModal }: FormModalProps) {
                                     }`}
                             >
                                 <div className="h-full pl-2">
-                                    <ResertPw setForm={setForm} />
+                                    <ResertPw setForm={setForm} setFormDetails={setFormDetails} />
                                 </div>
                             </div>
                         </div>

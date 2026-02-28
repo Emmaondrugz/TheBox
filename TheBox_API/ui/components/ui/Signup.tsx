@@ -1,18 +1,29 @@
 import { useState } from "react";
 import { validatePassword } from "./passwordValidation";
+import { useRouter } from "next/navigation";
+
+type FormDetailsProps = {
+    Email: string | null,
+    password: string | null
+}
 
 type SignupProps = {
     setForm: (form: "signup" | "login" | "reset") => void;
+    setFormDetails: (details: FormDetailsProps) => void;
 };
 
-export default function Signup({ setForm }: SignupProps) {
+export default function Signup({ setForm, setFormDetails }: SignupProps) {
+
+    const router = useRouter()
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
 
-    const handleSubmit = () => {
+
+    const handleSubmit = async () => {
         let hasError = false;
         setEmailError("");
         setPasswordError("");
@@ -31,6 +42,40 @@ export default function Signup({ setForm }: SignupProps) {
         if (hasError) return;
 
         // TODO: hook up to API
+
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/users/register/', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: email,
+                    email: email,
+                    password: password
+                })
+            })
+
+            const data = await response.json()
+
+            if (response.ok) {
+                console.log('User created successfully!')
+
+                // Save tokens to localStorage
+                localStorage.setItem('accessToken', data.access);
+                localStorage.setItem('refreshToken', data.refresh)
+
+                // Redirect to product dashboard page
+                router.push('/products')
+            } else {
+                console.error('Error: ', JSON.stringify(data))
+            }
+
+
+
+        } catch (error) {
+            console.error('Failed to register user: ', error)
+        }
     };
 
     return (

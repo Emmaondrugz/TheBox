@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import "./globals.css";
 import FormModal from '../../components/FormModal'
@@ -11,6 +11,7 @@ export default function Hero() {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
 
 
   return (

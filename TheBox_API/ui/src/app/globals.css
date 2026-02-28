@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 /* Font utility classes */
 .montserrat {
   font-family: var(--font-montserrat), system-ui, -apple-system, BlinkMacSystemFont,

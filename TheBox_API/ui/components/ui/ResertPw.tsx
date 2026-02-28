@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { validatePassword } from "./passwordValidation";
 
+type FormDetailsProps = {
+    Email: string | null,
+    password: string | null
+}
+
 type ResertPwProps = {
     setForm: (form: "signup" | "login" | "reset") => void;
+    setFormDetails: (details: FormDetailsProps) => void;
 };
 
-export default function ResertPw({ setForm }: ResertPwProps) {
+export default function ResertPw({ setForm, setFormDetails }: ResertPwProps) {
     const [email, setEmail] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [showNewPassword, setShowNewPassword] = useState(false);
@@ -31,6 +37,10 @@ export default function ResertPw({ setForm }: ResertPwProps) {
         if (hasError) return;
 
         // TODO: hook up to API
+        setFormDetails({
+            Email: email,
+            password: newPassword,
+        });
     };
 
     return (
