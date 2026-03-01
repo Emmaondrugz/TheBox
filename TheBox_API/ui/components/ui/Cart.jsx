@@ -1,10 +1,8 @@
 'use client'
 import { useCart } from '../../context/CartContext';
-import { useRouter } from 'next/navigation';
 
 export default function Cart({ isCartOpen, setIsCartOpen }) {
     const { cart } = useCart();
-    const router = useRouter();
 
     if (!isCartOpen) return null;
 
@@ -54,7 +52,6 @@ export default function Cart({ isCartOpen, setIsCartOpen }) {
                     <button
                         onClick={() => {
                             setIsCartOpen(false);
-                            router.push('/checkout');
                         }}
                         disabled={!cart?.items?.length}
                         className="w-full bg-black text-white py-4 uppercase text-xs tracking-widest hover:bg-neutral-800 transition-colors disabled:bg-gray-300"

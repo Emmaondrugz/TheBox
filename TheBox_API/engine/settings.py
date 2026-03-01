@@ -90,15 +90,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'engine.wsgi.application'
 
-# --- DATABASE ---
-# Uses SQLite locally, but switches to PostgreSQL on Render automatically
+# --- DATABASE CONFIGURATION ---
+import dj_database_url
+
 DATABASES = {
     'default': dj_database_url.config(
+        # This looks for a variable named DATABASE_URL in your .env
+        # If it doesn't find it, it falls back to your local sqlite
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
         conn_max_age=600
     )
 }
-
 # --- STATIC FILES ---
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
