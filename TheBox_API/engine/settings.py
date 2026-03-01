@@ -15,7 +15,17 @@ SECRET_KEY = os.getenv('SECRET_KEY') # No fallback in prod!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 # Add your Render URL and Vercel URL here
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+# ALLOWED_HOSTS must include 127.0.0.1 for local testing
+ALLOWED_HOSTS = ['thebox-pssn.onrender.com', 'localhost', '127.0.0.1']
+
+# CORS settings must allow your frontend port (usually 3000)
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
+# If you want to be extra safe during debugging:
+CORS_ALLOW_ALL_ORIGINS = True
 
 # --- APPLICATION DEFINITION ---
 INSTALLED_APPS = [
@@ -53,7 +63,6 @@ ROOT_URLCONF = 'engine.urls'
 
 # --- CORS & CSRF ---
 # This allows your Vercel frontend to talk to this API
-CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',')
 
 REST_FRAMEWORK = {

@@ -17,8 +17,7 @@ export const CartProvider = ({ children }) => {
         }
 
         try {
-
-            const res = await fetch(`${API_URL}/api/users/cart/`, {
+            const res = await fetch('http://localhost:8000/api/users/cart/', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await res.json();

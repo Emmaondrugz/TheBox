@@ -19,6 +19,7 @@ export default function Login({ setForm, setFormDetails }: LoginProps) {
     const [showPassword, setShowPassword] = useState(false);
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const [isLoading, setIsLoading] = useState(false)
     const { fetchCart } = useCart()
 
     const handleSubmit = async () => {
@@ -43,6 +44,7 @@ export default function Login({ setForm, setFormDetails }: LoginProps) {
         const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
         try {
+            setIsLoading(true)
             const response = await fetch(`${API_URL}/api/users/login/`, {
                 method: 'POST',
                 headers: {
@@ -66,6 +68,7 @@ export default function Login({ setForm, setFormDetails }: LoginProps) {
 
                 // TRIGGER CART FETCH IMMEDIATELY BEFORE REDIRECT
                 await fetchCart();
+                setIsLoading(false)
 
                 // Redirect to product dashboard page
                 router.push('/products')
@@ -174,8 +177,9 @@ export default function Login({ setForm, setFormDetails }: LoginProps) {
                     className="bg-black text-white cursor-pointer py-2 w-full rounded-md"
                     type="button"
                     onClick={handleSubmit}
+                    disabled={isLoading}
                 >
-                    Login
+                    {isLoading ? 'Loading...' : 'Login'}
                 </button>
             </div>
         </div>
