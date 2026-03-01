@@ -5,12 +5,13 @@ import Image from "next/image";
 import "./globals.css";
 import FormModal from '../../components/FormModal'
 
-export default function Hero() {
+export default function home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [products, setProducts] = useState([])
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
 
 
 

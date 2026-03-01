@@ -3,6 +3,8 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
+from rest_framework import viewsets
+from .models import *
 from .serializers import *
 
 
@@ -33,3 +35,19 @@ class UserDetailView(generics.RetrieveAPIView):
     def get_object(self):
         # This returns the user associated with the JWT token
         return self.request.user
+
+
+class CartViewSet(viewsets.ModelViewSet):
+    serializer_class = CartSerializer
+
+    def get_queryset(self):
+        return Cart.objects.filter(user=self.request.user)
+
+    def create(self, request):
+        cart, _ = Cart.objects.get_or_create(user=request.user)
+        product_id = request.data.get('product_id')
+        item, created = CartItem.objects.get_or_create(cart=cart, product_id=product_id)
+        if not created:
+            item.quantity += 1
+            item.save()
+        return Response(status=status.HTTP_201_CREATED)

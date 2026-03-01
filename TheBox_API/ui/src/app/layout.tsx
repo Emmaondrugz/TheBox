@@ -1,4 +1,7 @@
+import { CartProvider } from '../../context/CartContext'
+
 import type { Metadata } from "next";
+
 import {
   Geist,
   Geist_Mono,
@@ -58,7 +61,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${poppins.variable} ${grotesk.variable} ${cormorantGaramond.variable} antialiased`}
       >
-        {children}
+        <CartProvider>
+          {children}
+        </CartProvider>
       </body>
     </html>
   );

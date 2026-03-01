@@ -35,7 +35,8 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts",
-    "src/app/products/page.jsx"
+    "src/app/products/page.jsx",
+    "components/ui/ProductsHeader.jsx"
   ],
   "exclude": [
     "node_modules"
