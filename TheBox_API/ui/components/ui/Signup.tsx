@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { validatePassword } from "./passwordValidation";
 import { useRouter } from "next/navigation";
+import { useCart } from "../../context/CartContext";
 
 type FormDetailsProps = {
     Email: string | null,
@@ -21,6 +22,7 @@ export default function Signup({ setForm, setFormDetails }: SignupProps) {
     const [showPassword, setShowPassword] = useState(false);
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const { setCart } = useCart()
 
 
     const handleSubmit = async () => {
@@ -59,7 +61,11 @@ export default function Signup({ setForm, setFormDetails }: SignupProps) {
             const data = await response.json()
 
             if (response.ok) {
+                localStorage.removeItem('accessToken')
+                localStorage.removeItem('refreshToken');
+                setCart(null)
                 console.log('User created successfully!')
+
 
                 // Save tokens to localStorage
                 localStorage.setItem('accessToken', data.access);
