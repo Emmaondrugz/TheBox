@@ -25,6 +25,9 @@ export default function Signup({ setForm, setFormDetails }: SignupProps) {
     const { setCart } = useCart()
 
 
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
+
     const handleSubmit = async () => {
         let hasError = false;
         setEmailError("");
@@ -46,7 +49,7 @@ export default function Signup({ setForm, setFormDetails }: SignupProps) {
         // TODO: hook up to API
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/users/register/', {
+            const response = await fetch(`${API_URL}/api/users/register/`, {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
