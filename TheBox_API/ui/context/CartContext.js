@@ -36,7 +36,10 @@ export const CartProvider = ({ children }) => {
         }
     };
 
-    useEffect(() => { fetchCart(); }, []);
+    // ADD THIS: Automatically fetch cart on mount or when token is present
+    useEffect(() => {
+        fetchCart();
+    }, []); // Runs once when the app/provider loads
 
     return (
         <CartContext.Provider value={{ cart, setCart, fetchCart }}>

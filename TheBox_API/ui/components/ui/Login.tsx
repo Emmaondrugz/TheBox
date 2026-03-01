@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { validatePassword } from "./passwordValidation";
 import { useRouter } from "next/navigation";
+import { useCart } from "../../context/CartContext";
 
 type FormDetailsProps = {
     Email: string | null,
@@ -18,6 +19,7 @@ export default function Login({ setForm, setFormDetails }: LoginProps) {
     const [showPassword, setShowPassword] = useState(false);
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const { fetchCart } = useCart()
 
     const handleSubmit = async () => {
         let hasError = false;
@@ -59,6 +61,9 @@ export default function Login({ setForm, setFormDetails }: LoginProps) {
                 // Save tokens to localStorage
                 localStorage.setItem('accessToken', data.access);
                 localStorage.setItem('refreshToken', data.refresh)
+
+                // TRIGGER CART FETCH IMMEDIATELY BEFORE REDIRECT
+                await fetchCart();
 
                 // Redirect to product dashboard page
                 router.push('/products')
